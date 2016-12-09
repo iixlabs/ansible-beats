@@ -1,0 +1,8 @@
+---
+galaxy_info:
+  author: Cam Parry
+  description: beats role with elastisearch storage
+  company: Console Inc.
+  license: Apache license
+  min_ansible_version: 2.0
+dependencies: []

@@ -1,0 +1,2 @@
+- include: dockbeat.yml
+  when: dockbeat_enabled|bool 

@@ -1,0 +1,28 @@
+[Unit]
+Description=dockbeat
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=on-failure
+RestartSec=20
+TimeoutStartSec=0
+EnvironmentFile=-/etc/environment
+ExecStartPre=-/usr/bin/docker kill dockbeat
+ExecStartPre=-/usr/bin/docker rm dockbeat
+ExecStartPre=/usr/bin/docker pull {{ dockbeat_image }}
+ExecStart=/usr/bin/docker run --name dockbeat \
+--restart={{ dockbeat_restart_policy }} \
+--net={{ dockbeat_net }} \
+--hostname={{ dockbeat_hostname }} \
+--privileged=true \
+--memory=300M \
+-v /var/run/docker.sock:/var/run/docker.sock:ro \
+-v /etc/dockbeat/:/etc/dockbeat:ro \
+-v /var/log/dockbeat:/var/logs/dockbeat:rw \
+{{ dockbeat_image }}
+
+ExecStop=/usr/bin/docker stop dockbeat
+
+[Install]
+WantedBy=multi-user.target

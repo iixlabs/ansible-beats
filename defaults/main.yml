@@ -1,0 +1,10 @@
+---
+# defaults file for dockbeat
+dockbeat_enabled: true
+dockbeat_version: 'latest'
+dockbeat_restart_policy: 'always'
+dockbeat_net: 'bridge'
+dockbeat_hostname: "{{ ansible_host }}"
+dockbeat_image: "ingensi/dockbeat:{{ dockbeat_version }}"
+dockbeat_elasticsearch_host: "{{ elasticsearch_host }}"
+dockbeat_elasticsearch_port: "{{ elasticsearch_port }}"

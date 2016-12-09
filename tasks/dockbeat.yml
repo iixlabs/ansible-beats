@@ -1,0 +1,32 @@
+---
+# tasks for running dockbeat
+- name: deploy dockbeat config
+  become: yes
+  template:
+    src: dockbeat.yml.j2
+    dest: /etc/dockbeat/dockbeat.yml
+  tags:
+    - dockbeat
+
+- name: deploy dockbeat service
+  become: yes
+  template:
+    src: dockbeat.service.j2
+    dest: /etc/systemd/system/dockbeat.service
+  notify:
+    - reload systemd
+    - restart dockbeat
+  tags:
+    - dockbeat
+
+# Attach to the running container, or start it if needed
+# and forward all signals so that the process manager can detect
+# when a container stops and correctly restart it.
+- name: ensure dockbeat is running (and enable it at boot)
+  become: yes
+  service:
+    name: dockbeat
+    state: started
+    enabled: yes
+  tags:
+    - dockbeat
