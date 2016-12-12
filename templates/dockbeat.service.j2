@@ -18,8 +18,8 @@ ExecStart=/usr/bin/docker run --name dockbeat \
 --privileged=true \
 --memory=300M \
 -v /var/run/docker.sock:/var/run/docker.sock:ro \
--v /etc/dockbeat/dockerbeat.yml:/etc/dockbeat/dockbeat.yml:ro \
--v /var/log/dockbeat:/var/logs/dockbeat:rw \
+-v /etc/dockbeat/:/etc/dockbeat:ro \
+-v /var/log/dockbeat/:/var/logs/dockbeat:rw \
 {% if dockbeat_tls|bool %}
 -e DOCKER_ENABLE_TLS=true \
 -e DOCKER_CA_PATH={{ dockbeat_docker_ca_path }} \
