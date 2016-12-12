@@ -36,7 +36,6 @@ output:
   elasticsearch:
     hosts: ["{{ dockbeat_elasticsearch_host }}:{{ dockbeat_elasticsearch_port }}"]
     protocol: "https"
-    index: 'dockbeat-%{+yyyy.MM.dd}'
 
 logging:
   to_syslog: false
