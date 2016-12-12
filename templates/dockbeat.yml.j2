@@ -2,7 +2,7 @@
 
 ############################# Dockerbeat ######################################
 
-dockerbeat:
+dockbeat:
   # Defines how often a docker stat is sent to the output
   period: ${PERIOD:5}
 
@@ -34,6 +34,6 @@ dockerbeat:
 
   output:
     elasticsearch:
-      enabled: true
-      port: 9200
-      host: localhost
+      hosts: ["{{ dockbeat_elasticsearch_host }}:{{ dockbeat_elasticsearch_port }}"]
+      protocol: "https"
+      index: 'dockbeat-%{+yyyy.MM.dd}'

@@ -20,6 +20,12 @@ ExecStart=/usr/bin/docker run --name dockbeat \
 -v /var/run/docker.sock:/var/run/docker.sock:ro \
 -v /etc/dockbeat/:/etc/dockbeat:ro \
 -v /var/log/dockbeat:/var/logs/dockbeat:rw \
+{% if dockbeat_tls|bool %}
+-e DOCKER_ENABLE_TLS=true \
+-e DOCKER_CA_PATH={{ dockbeat_docker_ca_path }} \
+-e DOCKER_CERT_PATH={{ dockbeat_docker_ca_path }} \
+-e DOCKER_KEY_PATH={{ dockbeat_docker_key_path }} \
+{% endif %}
 {{ dockbeat_image }}
 
 ExecStop=/usr/bin/docker stop dockbeat
