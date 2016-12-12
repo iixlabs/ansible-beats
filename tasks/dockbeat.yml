@@ -1,5 +1,13 @@
 ---
 # tasks for running dockbeat
+- name: make config directory
+  become: yes
+  file:
+    dest: /etc/dockbeat
+    state: directory
+  tags:
+    - dockbeat
+
 - name: deploy dockbeat config
   become: yes
   template:
