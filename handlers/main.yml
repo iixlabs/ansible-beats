@@ -1,10 +1,10 @@
 ---
+- name: reload systemd
+  become: yes
+  command: systemctl daemon-reload
+
 - name: restart dockbeat
   become: yes
   service:
     name: dockbeat
     state: restarted
-
-- name: reload systemd
-  become: yes
-  command: systemctl daemon-reload
