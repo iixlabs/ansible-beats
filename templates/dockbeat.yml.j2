@@ -34,7 +34,7 @@ dockbeat:
 
 output:
   elasticsearch:
-    hosts: ["{{ dockbeat_elasticsearch_host }}:{{ dockbeat_elasticsearch_port }}"]
+    hosts: ["{{ beats_elasticsearch_host }}:{{ beats_elasticsearch_port }}"]
     protocol: "https"
 
 logging:

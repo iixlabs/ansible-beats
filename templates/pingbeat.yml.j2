@@ -1,0 +1,48 @@
+################### Pingbeat Configuration Example #########################
+
+############################# Input ############################################
+input:
+
+  # Loop every 5 seconds
+  period: "{{ pingbeat_period }}"
+  geoipdb: '/etc/pingbeat/GeoLite2-City.mmdb'
+  # Use raw sockets for ping
+  # Requires root!
+  privileged: true
+  # Whether to perform IPv4/v6 pings
+  useipv4: true
+  useipv6: false
+  # List targets under the tag you want assigned to
+  targets:
+  {% for host in pingbeat.hosts %}
+    - {{ host }}
+  {%- endfor %}
+
+############################# Output ##########################################
+
+output:
+  elasticsearch:
+    hosts: ["{{ beats_elasticsearch_host }}:{{ beats_elasticsearch_port }}"]
+    protocol: "https"
+
+
+############################# Shipper #########################################
+
+shipper:
+  # The name of the shipper that publishes the network data. It can be used to group
+  # all the transactions sent by a single shipper in the web interface.
+  # If this options is not defined, the hostname is used.
+  #name:
+
+  # The tags of the shipper are included in their own field with each
+  # transaction published. Tags make it easy to group servers by different
+  # logical properties.
+  #tags: ["service-X", "web-tier"]
+
+  # Uncomment the following if you want to ignore transactions created
+  # by the server on which the shipper is installed. This option is useful
+  # to remove duplicates if shippers are installed on multiple servers.
+  #ignore_outgoing: true
+  geoip:
+    paths:
+      - '/etc/pingbeat/GeoLite2-City.mmdb'

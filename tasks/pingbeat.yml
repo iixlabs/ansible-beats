@@ -1,0 +1,53 @@
+---
+- name: make config directory
+  become: yes
+  file:
+    dest: /etc/pingbeat
+    state: directory
+  tags:
+    - pingbeat
+
+- name: deploy pingbeat config
+  become: yes
+  template:
+    src: pingbeat.yml.j2
+    dest: /etc/pingbeat/pingbeat.yml
+  tags:
+    - pingbeat
+
+- name: download pingbeat
+  become: yes
+  get_url:
+    url: "{{ pingbeat_url }}"
+    dest: /etc/pingbeat/pingbeat
+    mode: 0755
+    validate_certs: no
+    force: true
+  tags:
+    - pingbeat
+
+- name: download geoipdb
+  become: yes
+  unarchive:
+    src: "{{ geoipdb_url }}"
+    dest: /etc/pingbeat/GeoLite2-City.mmdb
+    remote_src: yes
+  tags:
+    - pingbeat
+
+- name: deploy pingbeat service
+  become: yes
+  template:
+    src: pingbeat.service.j2
+    dest: /etc/systemd/system/pingbeat.service
+  tags:
+    - scope
+
+- name: ensure pingbeat service is running.
+  become: yes
+  service:
+    name: pingbeat
+    state: started
+    enabled: yes
+  tags:
+    - pingbeat

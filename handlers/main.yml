@@ -14,3 +14,9 @@
   service:
     name: packetbeat
     state: restarted
+
+- name: restart pingbeat
+  become: yes
+  service:
+    name: pingbeat
+    state: restarted

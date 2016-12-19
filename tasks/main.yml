@@ -2,4 +2,7 @@
   when: dockbeat_enabled|bool 
 
 - include: packetbeat.yml
-  when: packetbeat_enabled|bool 
+  when: packetbeat_enabled|bool
+
+- include: pingbeat.yml
+  when: pingbeat_enabled|bool 
