@@ -31,6 +31,7 @@ packetbeat_enable_redis: false
 packetbeat_enable_thrift: false
 packetbeat_enable_nfs: false
 
+pingbeat_enabled: false
 pingbeat_version: 1.0-beta1
 pingbeat_url: "https://github.com/joshuar/pingbeat/releases/download/{{ pingbeat_version }}/pingbeat-linux-64"
 geoipd_url: "http://geolite.maxmind.com/download/geoip/database/GeoLiteCity_CSV/GeoLiteCity-latest.zip"

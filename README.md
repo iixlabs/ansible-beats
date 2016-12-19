@@ -4,6 +4,11 @@ Ansible Beats
 
 Ansible role for installing different elastic beats on your server
 
+Supported beats
+* dockbeat
+* packetbeat
+* pingbeat
+
 Requirements
 ------------
 
@@ -12,12 +17,13 @@ Install [Ansible](http://www.ansible.com) on your computer, refer to the officia
 Installation
 ------------
 
-`ansible-galaxy install console.beats`
+`ansible-galaxy install https://github.com/iixlabs/ansible-beats`
 
 Role Variables
 --------------
 
-The variable **dockbeat_enabled** is defined in the file **defaults/main.yml**. This enables the different beat that you want to install
+All variables are defined in the file **defaults/main.yml**. 
+They will enable the different beat that you want to install and the versions to use
 
 Dependencies
 ------------
@@ -33,8 +39,8 @@ Example Playbook
   sudo: true
   vars:
     dockbeat_enabled: true
-    dockbeat_elasticsearch_host: localhost
-    dockbeat_elasticsearch_port: 9200
+    beats_elasticsearch_host: localhost
+    beats_elasticsearch_port: 9200
   roles:
     - beats
 ```
