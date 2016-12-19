@@ -17,8 +17,7 @@ Installation
 Role Variables
 --------------
 
-The variable **coreos_timezone** is defined in the file **defaults/main.yml**. 
-It must be a valid entry from the system as defined in the folder **/usr/share/zoneinfo**.
+The variable **dockbeat_enabled** is defined in the file **defaults/main.yml**. This enables the different beat that you want to install
 
 Dependencies
 ------------
@@ -33,6 +32,9 @@ Example Playbook
 - hosts: myhosts
   sudo: true
   vars:
+    dockbeat_enabled: true
+    dockbeat_elasticsearch_host: localhost
+    dockbeat_elasticsearch_port: 9200
   roles:
     - beats
 ```

@@ -1,0 +1,26 @@
+[Unit]
+Description=packetbeat
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=on-failure
+RestartSec=20
+TimeoutStartSec=0
+EnvironmentFile=-/etc/environment
+ExecStartPre=-/usr/bin/docker kill packetbeat
+ExecStartPre=-/usr/bin/docker rm packetbeat
+ExecStartPre=/usr/bin/docker pull {{ packetbeat_image }}
+ExecStart=/usr/bin/docker run --name packetbeat \
+--restart={{ beat_restart_policy }} \
+--net={{ beats_net }} \
+--hostname={{ beats_hostname }} \
+--privileged=true \
+--memory=300M \
+-v /etc/packetbeat:/etc/packetbeat:ro \
+{{ packetbeat_image }}
+
+ExecStop=/usr/bin/docker stop packetbeat
+
+[Install]
+WantedBy=multi-user.target

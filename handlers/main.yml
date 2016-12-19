@@ -8,3 +8,9 @@
   service:
     name: dockbeat
     state: restarted
+
+- name: restart packetbeat
+  become: yes
+  service:
+    name: packetbeat
+    state: restarted

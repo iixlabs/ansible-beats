@@ -1,14 +1,32 @@
 ---
+# fefaults for beats
+beats_elasticsearch_host: localhost
+beats_elasticsearch_port: 9200
+beats_hostname: "{{ ansible_host }}"
+beats_net: 'bridge'
+beats_restart_policy: 'always'
+
 # defaults file for dockbeat
 dockbeat_enabled: false
-dockbeat_version: 'latest'
-dockbeat_restart_policy: 'always'
-dockbeat_net: 'bridge'
-dockbeat_hostname: "{{ ansible_host }}"
-dockbeat_image: "ingensi/dockbeat:{{ dockbeat_version }}"
-dockbeat_elasticsearch_host: "{{ elasticsearch_host }}"
-dockbeat_elasticsearch_port: "{{ elasticsearch_port }}"
+dockbeat_version: 'v1'
+dockbeat_image: "fmeriot/dockbeat-labels:{{ dockbeat_version }}"
 dockbeat_tls: false
 dockbeat_docker_ca_path: /etc/ssl/cert
 dockbeat_docker_cert_path: /etc/ssl/cert
 dockbeat_docker_key_path: /etc/ssl/key
+
+packetbeat_enabled: false
+packetbeat_version: 'v1'
+packetbeat_image: "fmeriot/dockbeat-labels:{{ dockbeat_version }}"
+packetbeat_enable_icmp: false
+packetbeat_enable_amq: false
+packetbeat_enable_cassandra: false
+packetbeat_enable_mysql: false
+packetbeat_enable_mongo: false
+packetbeat_enable_dns: false
+packetbeat_enable_http: false
+packetbeat_enable_memcache: false
+packetbeat_enable_postgres: false
+packetbeat_enable_redis: false
+packetbeat_enable_thrift: false
+packetbeat_enable_nfs: false

@@ -1,0 +1,40 @@
+---
+# tasks for running packetbeat
+- name: make config directory
+  become: yes
+  file:
+    dest: /etc/packetbeat
+    state: directory
+  tags:
+    - packetbeat
+
+- name: deploy packetbeat config
+  become: yes
+  template:
+    src: packetbeat.yml.j2
+    dest: /etc/packetbeat/packetbeat.yml
+  tags:
+    - packetbeat
+
+- name: deploy packetbeat service
+  become: yes
+  template:
+    src: packetbeat.service.j2
+    dest: /etc/systemd/system/packetbeat.service
+  notify:
+    - reload systemd
+    - restart packetbeat
+  tags:
+    - packetbeat
+
+# Attach to the running container, or start it if needed
+# and forward all signals so that the process manager can detect
+# when a container stops and correctly restart it.
+- name: ensure packetbeat is running (and enable it at boot)
+  become: yes
+  service:
+    name: packetbeat
+    state: started
+    enabled: yes
+  tags:
+    - packetbeat

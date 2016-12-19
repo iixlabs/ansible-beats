@@ -1,2 +1,5 @@
 - include: dockbeat.yml
   when: dockbeat_enabled|bool 
+
+- include: packetbeat.yml
+  when: packetbeat_enabled|bool 
