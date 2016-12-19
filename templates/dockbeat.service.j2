@@ -12,9 +12,9 @@ ExecStartPre=-/usr/bin/docker kill dockbeat
 ExecStartPre=-/usr/bin/docker rm dockbeat
 ExecStartPre=/usr/bin/docker pull {{ dockbeat_image }}
 ExecStart=/usr/bin/docker run --name dockbeat \
---restart={{ dockbeat_restart_policy }} \
---net={{ dockbeat_net }} \
---hostname={{ dockbeat_hostname }} \
+--restart={{ beats_restart_policy }} \
+--net={{ beats_net }} \
+--hostname={{ beats_hostname }} \
 --privileged=true \
 --memory=300M \
 -v /var/run/docker.sock:/var/run/docker.sock:ro \
