@@ -13,10 +13,8 @@ input:
   useipv4: true
   useipv6: false
   # List targets under the tag you want assigned to
-  targets:
-  {% for host in pingbeat.hosts %}
-    - {{ host }}
-  {%- endfor %}
+  targets: |
+    {{ pb_hosts }}
 
 ############################# Output ##########################################
 

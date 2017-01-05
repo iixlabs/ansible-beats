@@ -28,12 +28,23 @@
 
 - name: download geoipdb
   become: yes
-  unarchive:
-    src: "{{ geoipdb_url }}"
-    dest: /etc/pingbeat/GeoLite2-City.mmdb
-    remote_src: yes
+  get_url:
+    url: "{{ geoipdb_url }}"
+    dest: /etc/pingbeat
+    mode: 0755
+    validate_certs: no
+    force: true
   tags:
     - pingbeat
+
+- name: decompress geoipdb
+  become: yes
+  command: gunzip GeoLite2-City.mmdb.gz
+    chdir: /etc/pingbeat
+    creates: GeoLite2-City.mmdb
+  tags:
+    - pingbeat
+    - skip_ansible_lint
 
 - name: deploy pingbeat service
   become: yes
@@ -41,7 +52,7 @@
     src: pingbeat.service.j2
     dest: /etc/systemd/system/pingbeat.service
   tags:
-    - scope
+    - pingbeat
 
 - name: ensure pingbeat service is running.
   become: yes
